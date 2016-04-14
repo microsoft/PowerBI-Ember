@@ -1,3 +1,12 @@
-<h2 id="title">Welcome to Ember</h2>
-
-{{outlet}}
+<div class="container">
+    <h1>Power BI - Sample - Client - Ember</h1>
+    <p>Demonstrate how to consume Power BI API and render using ember component.</p>
+    
+    <h2>Scenarios:</h2>
+    <ul class="nav nav-pills">
+        {{#link-to 'scenario1' tagName="li"}}<a href="">Scenario1: Report Id is known. (Static)</a>{{/link-to}}
+        {{#link-to 'scenario2' tagName="li"}}<a href="">Scenario2: Search reports by name. (Dynamic)</a>{{/link-to}}
+    </ul>
+    <hr class="m-y-md">
+    {{outlet}}
+</div>

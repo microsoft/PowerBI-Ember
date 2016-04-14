@@ -1,0 +1,30 @@
+<h1>Scenario 2</h1>
+<p>Dynamic: Search reports by name, render selected</p>
+<small>Hint: Type 'Re' in the text field and search to find all reports that begin with 'Re'</small>
+
+<form id="search-form" class="form-inline">
+    <div class="form-group">
+        <label for="searchinput">Search</label>
+        {{input type="text" class="form-control" id="searchinput" required="required" placeholder="Enter report name" autocomplete="off" value=filter key-up=(action 'autoComplete')}}
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+    <div class="checkbox">
+        <label for="filterPaneCheckbox">
+            <input type="checkbox" name="filterPaneCheckbox" id="filterPaneCheckbox" checked="checked"> Enable filter pane when embedding report.
+        </label>
+    </div>
+</form>
+
+<p class="reportslistdescription" >Total Results: <span id="reportslistcount">{{vm.reports.length}}</span></p>
+<ol id="reportslist">
+  {{#each reports as |report|}}
+    <li>
+        <span class="report-name">{{report.name}}</span>
+        <button type="button" class="btn btn-success" {{action 'embedReport' report}}>Embed!</button>
+    </li>
+  {{/each}}
+</ol>
+
+<div class="powerbi-sample">
+    {{ms-powerbi-report embedUrl=report.embedUrl accessToken=report.accessToken}}
+</div>
