@@ -26,15 +26,15 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{ms-powerbi-report}}`);
+  this.render(hbs`{{powerbi-component}}`);
 
   assert.equal(this.$().text().trim(), '');
 
   // Template block usage:
   this.render(hbs`
-    {{#ms-powerbi-report}}
+    {{#powerbi-component}}
       template block text
-    {{/ms-powerbi-report}}
+    {{/powerbi-component}}
   `);
 
   assert.equal(this.$().text().trim(), '');

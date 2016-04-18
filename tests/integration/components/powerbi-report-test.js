@@ -11,7 +11,7 @@ const powerbiStub = Ember.Service.extend({
   remove: sinon.spy()
 });
 
-moduleForComponent('ms-powerbi-report', 'Integration | Component | ms powerbi report', {
+moduleForComponent('powerbi-report', 'Integration | Component | powerbi report', {
   integration: true,
   
   beforeEach: function () {
@@ -26,15 +26,15 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{ms-powerbi-report}}`);
+  this.render(hbs`{{powerbi-report}}`);
 
   assert.equal(this.$().text().trim(), '');
 
   // Template block usage:
   this.render(hbs`
-    {{#ms-powerbi-report}}
+    {{#powerbi-report}}
       template block text
-    {{/ms-powerbi-report}}
+    {{/powerbi-report}}
   `);
 
   assert.equal(this.$().text().trim(), '');
@@ -49,7 +49,7 @@ test('calls the internal .embed when component is rendered and attributes are va
   this.set('embedUrl', testData.embedUrl);
   this.set('accessToken', testData.accessToken);
   
-  this.render(hbs`{{ms-powerbi-report embedUrl=embedUrl accessToken=accessToken}}`);
+  this.render(hbs`{{powerbi-report embedUrl=embedUrl accessToken=accessToken}}`);
 
   assert.ok(this.get('powerbiService.embed').called);
 });
@@ -66,7 +66,7 @@ test('does not call the internal .embed if attributes are invalid, but calls the
   this.set('embedUrl', testData.embedUrl);
   this.set('accessToken', null);
   
-  this.render(hbs`{{ms-powerbi-report embedUrl=embedUrl accessToken=accessToken}}`);
+  this.render(hbs`{{powerbi-report embedUrl=embedUrl accessToken=accessToken}}`);
 
   assert.ok(this.get('powerbiService.embed').notCalled);
   
@@ -87,7 +87,7 @@ test('calls internal .embed with jquery element of the component and the correct
   this.set('embedUrl', testData.embedUrl);
   this.set('accessToken', testData.accessToken);
   
-  this.render(hbs`{{ms-powerbi-report embedUrl=embedUrl accessToken=accessToken}}`);
+  this.render(hbs`{{powerbi-report embedUrl=embedUrl accessToken=accessToken}}`);
 
   const expectedData = {
     type: 'powerbi-report',
@@ -114,7 +114,7 @@ test('calls internal .remove with this.component', function () {
   this.set('showReport', true);
   
   // Act
-  this.render(hbs`{{#if showReport}}{{ms-powerbi-report embedUrl=embedUrl accessToken=accessToken}}{{/if}}`);
+  this.render(hbs`{{#if showReport}}{{powerbi-report embedUrl=embedUrl accessToken=accessToken}}{{/if}}`);
   sinon.assert.calledOnce(this.get('powerbiService.embed'));
   
   this.set('showReport', false);
@@ -122,3 +122,4 @@ test('calls internal .remove with this.component', function () {
   // Assert
   sinon.assert.calledWithExactly(this.get('powerbiService.remove'), fakeComponent);
 });
+

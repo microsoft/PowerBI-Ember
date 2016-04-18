@@ -3,7 +3,7 @@ A set of EmberJS components to seemlessly embed Power BI components into web bas
 
 ## Contents
 
-This addon provides a component `{{ms-powerbi-report}}` and service `powerbi`.
+This addon provides components such as `{{powerbi-report}}` and service `powerbi`.
 
 ## Getting started
 
@@ -22,7 +22,13 @@ This addon provides a component `{{ms-powerbi-report}}` and service `powerbi`.
   
 3. Insert the component in your template where you want to embed the visual:
 
-  `{{ms-powerbi-report embedUrl=report.embedUrl accessToken=report.accessToken}}`
+  `{{powerbi-report embedUrl=report.embedUrl accessToken=report.accessToken}}`
+  
+## Other Notes
+
+  Use the generic component to pass all properties as a single object.  This may be useful when the type of the embeded component changes dynamically:
+  
+  `{{powerbi-component report}}`
 
 ## Running the dummy app:
 ### Installation

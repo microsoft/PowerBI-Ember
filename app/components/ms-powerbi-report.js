@@ -1,1 +1,0 @@
-export { default } from 'ember-powerbi/components/ms-powerbi-report';

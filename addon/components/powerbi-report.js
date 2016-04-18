@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from '../templates/components/ms-powerbi-report';
+import layout from '../templates/components/powerbi-report';
 
 export default Ember.Component.extend({
   classNames: ['powerbi-frame'],
