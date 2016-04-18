@@ -7,6 +7,7 @@ const {
 
 export default Ember.Controller.extend({
   filter: null,
+  filterPaneEnabled: false,
   reports: null,
   report: null,
   
@@ -22,6 +23,11 @@ export default Ember.Controller.extend({
     return fetch(`http://localhost:1248/api/reports/${reportId}`)
       .then(response => response.json())
       .then(report => {
+        report.type = 'powerbi-report';
+        report.filterPaneEnabled = this.get('filterPaneEnabled');
+        // remove after update 'powerbi-client' to 2.x
+        report.overwrite = true;
+        
         this.set('report', report);
       });
   },

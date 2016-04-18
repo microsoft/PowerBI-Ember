@@ -10,7 +10,7 @@
     <button type="submit" class="btn btn-primary">Search</button>
     <div class="checkbox">
         <label for="filterPaneCheckbox">
-            <input type="checkbox" name="filterPaneCheckbox" id="filterPaneCheckbox" checked="checked"> Enable filter pane when embedding report.
+            {{input type="checkbox" id="filterPaneCheckbox" checked=filterPaneEnabled }} Enable filter pane when embedding report.
         </label>
     </div>
 </form>
@@ -26,5 +26,5 @@
 </ol>
 
 <div class="powerbi-sample">
-    {{ms-powerbi-report embedUrl=report.embedUrl accessToken=report.accessToken}}
+    {{powerbi-component report}}
 </div>

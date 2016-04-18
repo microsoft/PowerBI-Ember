@@ -7,11 +7,9 @@ export default Ember.Component.extend({
   powerbi: Ember.inject.service('powerbi'),
   
   accessToken: '',
-  async: false,
   component: null,
   embedUrl: null,
-  filter: '',
-  filterPaneEnabled: false,
+  options: null,
   
   didRender() {
     this._super(...arguments);
@@ -21,20 +19,20 @@ export default Ember.Component.extend({
     }
   },
   
-  validateAttributes() {
-    return !Ember.isEmpty(this.get('embedUrl')) && !Ember.isEmpty(this.get('accessToken'));
-  },
-  
   embed(element) {
     const config = {
         type: 'powerbi-report',
         embedUrl: this.embedUrl,
-        accessToken: this.accessToken,
-        filterPaneEnabled: this.filterPaneEnabled,
-        overwrite: true
+        accessToken: this.accessToken
     };
+    
+    Ember.$.extend(config, this.options);
 
     this.component = this.get('powerbi').embed(element, config);
+  },
+  
+  validateAttributes() {
+    return !Ember.isEmpty(this.get('embedUrl')) && !Ember.isEmpty(this.get('accessToken'));
   },
   
   willDestroyElement() {
