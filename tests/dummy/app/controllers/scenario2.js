@@ -6,13 +6,15 @@ const {
 } = Ember;
 
 export default Ember.Controller.extend({
+  apiBaseUrl: 'http://powerbipaasapi.azurewebsites.net',
   filter: null,
   filterPaneEnabled: false,
   reports: null,
   report: null,
   
+  
   findReports() {
-    return fetch(`http://localhost:1248/api/reports?query=${this.get('filter')}`)
+    return fetch(`${this.apiBaseUrl}/api/reports?query=${this.get('filter')}`)
       .then(response => response.json())
       .then(reports => {
         this.set('reports', reports);
@@ -20,7 +22,7 @@ export default Ember.Controller.extend({
   },
   
   findReportById(reportId) {
-    return fetch(`http://localhost:1248/api/reports/${reportId}`)
+    return fetch(`${this.apiBaseUrl}/api/reports/${reportId}`)
       .then(response => response.json())
       .then(report => {
         report.type = 'powerbi-report';
