@@ -21,7 +21,7 @@ export default Ember.Component.extend({
   
   embed(element) {
     const config = {
-        type: 'powerbi-report',
+        type: 'report',
         embedUrl: this.embedUrl,
         accessToken: this.accessToken
     };

@@ -25,11 +25,8 @@ export default Ember.Controller.extend({
     return fetch(`${this.apiBaseUrl}/api/reports/${reportId}`)
       .then(response => response.json())
       .then(report => {
-        report.type = 'powerbi-report';
+        report.type = 'report';
         report.filterPaneEnabled = this.get('filterPaneEnabled');
-        // remove after update 'powerbi-client' to 2.x
-        report.overwrite = true;
-        
         this.set('report', report);
       });
   },

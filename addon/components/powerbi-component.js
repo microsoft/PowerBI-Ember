@@ -14,7 +14,7 @@ const PowerBiComponent = Ember.Component.extend({
     this._super(...arguments);
     
     this.set('validationMap', {
-        'powerbi-report': this.validateReportOptions
+        'report': this.validateReportOptions
     });
   },
   
