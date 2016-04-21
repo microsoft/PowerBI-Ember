@@ -1,7 +1,7 @@
 {
   "name": "ember-powerbi",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "1.0.0",
+  "description": "A set of Ember components to embed Power BI components into Ember applications.",
   "directories": {
     "doc": "doc",
     "test": "tests"
