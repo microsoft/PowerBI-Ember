@@ -13,7 +13,7 @@ export default Ember.Service.extend({
     return this.get('powerbi').embed(jqueryElement.get(0), config);
   },
   
-  remove(component) {
-    this.get('powerbi').remove(component);
+  reset(jqueryElement) {
+    this.get('powerbi').reset(jqueryElement.get(0));
   }
 });

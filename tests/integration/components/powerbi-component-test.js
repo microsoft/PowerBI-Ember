@@ -8,7 +8,7 @@ const embedStub = sinon.stub();
 embedStub.returns(fakeComponent);
 const powerbiStub = Ember.Service.extend({
   embed: embedStub,
-  remove: sinon.spy()
+  reset: sinon.spy()
 });
 
 moduleForComponent('powerbi-component', 'Integration | Component | powerbi component', {
@@ -42,7 +42,7 @@ test('it renders', function(assert) {
 
 test('calls the internal .embed when component is rendered and attributes are valid', function () {
   const testData = {
-    type: 'powerbi-report',
+    type: 'report',
     embedUrl: 'http://embed.powerbi.com',
     accessToken: 'fakeToken1'
   };
@@ -56,7 +56,7 @@ test('calls the internal .embed when component is rendered and attributes are va
 
 test('does not call the internal .embed if attributes are invalid, but calls them after they become valid', function (assert) {
   this.get('powerbiService.embed').reset();
-  this.get('powerbiService.remove').reset();
+  this.get('powerbiService.reset').reset();
   
   const testData = {
     embedUrl: 'http://embed.powerbi.com/appTokenReportEmbed',
@@ -69,7 +69,7 @@ test('does not call the internal .embed if attributes are invalid, but calls the
 
   assert.ok(this.get('powerbiService.embed').notCalled);
   
-  const validData = Ember.$.extend({ type: 'powerbi-report' }, testData);
+  const validData = Ember.$.extend({ type: 'report' }, testData);
   this.set('report', validData);
   
   sinon.assert.calledOnce(this.get('powerbiService.embed'), this.$(), sinon.match.any);
@@ -77,10 +77,10 @@ test('does not call the internal .embed if attributes are invalid, but calls the
 
 test('calls internal .embed with jquery element of the component and the correct configuration type for reports', function () {
   this.get('powerbiService.embed').reset();
-  this.get('powerbiService.remove').reset();
+  this.get('powerbiService.reset').reset();
   
   const testData = {
-    type: 'powerbi-report',
+    type: 'report',
     embedUrl: 'http://embed.powerbi.com/appTokenReportEmbed',
     accessToken: 'fakeToken1'
   };
@@ -92,14 +92,14 @@ test('calls internal .embed with jquery element of the component and the correct
   sinon.assert.calledOnce(this.get('powerbiService.embed'), this.$(), testData);
 });
 
-test('calls internal .remove with this.component', function () {
+test('calls internal .reset with this.component', function () {
   // Manual beforeEach
   this.get('powerbiService.embed').reset();
-  this.get('powerbiService.remove').reset();
+  this.get('powerbiService.reset').reset();
   
   // Arrange
   const testData = {
-    type: 'powerbi-report',
+    type: 'report',
     embedUrl: 'http://embed.powerbi.com/appTokenReportEmbed',
     accessToken: 'fakeToken1'
   };
@@ -111,8 +111,9 @@ test('calls internal .remove with this.component', function () {
   this.render(hbs`{{#if showReport}}{{powerbi-component report}}{{/if}}`);
   sinon.assert.calledOnce(this.get('powerbiService.embed'));
   
+  const component = this.$().find('.powerbi-frame');
   this.set('showReport', false);
 
   // Assert
-  sinon.assert.calledWithExactly(this.get('powerbiService.remove'), fakeComponent);
+  sinon.assert.calledWithMatch(this.get('powerbiService.reset'), { 0: component[0] });
 });

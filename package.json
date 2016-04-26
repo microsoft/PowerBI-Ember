@@ -55,5 +55,8 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "publishConfig": {
+    "tag": "beta"
   }
 }

@@ -15,13 +15,8 @@ test('it exists', function(assert) {
 
 test('calls to .embed call the core service .embed and return the result', function(assert) {
   // Arrange
-  const fakeHtmlElement = {};
   const testData = {
-    element: {
-      get() {
-        return fakeHtmlElement;
-      }
-    },
+    $element: $('<div></div>'),
     config: {},
     fakeComponent: {}
   };
@@ -36,34 +31,34 @@ test('calls to .embed call the core service .embed and return the result', funct
   service.set('powerbi', powerbiSpy);
   
   // Act
-  const result = service.embed(testData.element, testData.config);
+  const result = service.embed(testData.$element, testData.config);
   
   // Assert
-  assert.ok(powerbiSpy.embed.calledWithExactly(fakeHtmlElement, testData.config));
+  assert.ok(powerbiSpy.embed.calledWithExactly(testData.$element.get(0), testData.config));
   assert.equal(result, testData.fakeComponent);
   
   // Cleanup
   service.set('powerbi', originalPowerbi);
 });
 
-test('calls to .remove call the core service .remove', function(assert) {
+test('calls to .reset call the core service .reset', function(assert) {
   // Arrange
   const testData = {
-    component: {}
+    $element: $('<div></div>')
   };
   
   const service = this.subject();
   const originalPowerbi = service.get('powerbi');
   const powerbiSpy = {
-    remove: this.spy()
+    reset: this.spy()
   };
   service.set('powerbi', powerbiSpy);
   
   // Act
-  service.remove(testData.component);
+  service.reset(testData.$element);
   
   // Assert
-  assert.ok(powerbiSpy.remove.calledWithExactly(testData.component));
+  assert.ok(powerbiSpy.reset.calledWithExactly(testData.$element.get(0)));
   
   // Cleanup
   service.set('powerbi', originalPowerbi);

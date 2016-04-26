@@ -62,7 +62,7 @@ const PowerBiComponent = Ember.Component.extend({
   
   willDestroyElement() {
     this._super(...arguments);
-    this.get('powerbi').remove(this.component);
+    this.get('powerbi').reset(this.$());
   }
 });
 

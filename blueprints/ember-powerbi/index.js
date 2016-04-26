@@ -16,6 +16,6 @@ module.exports = {
   },
 
   afterInstall: function(options) {
-    return this.addBowerPackageToProject('powerbi-client');
+    return this.addBowerPackageToProject('powerbi-client#beta');
   }
 };
