@@ -12,6 +12,13 @@ export default Ember.Controller.extend({
   reports: null,
   report: null,
   
+  findAllReports() {
+    return fetch(`${this.apiBaseUrl}/api/reports`)
+      .then(response => response.json())
+      .then(reports => {
+        this.set('reports', reports);
+      });
+  },
   
   findReports() {
     return fetch(`${this.apiBaseUrl}/api/reports?query=${this.get('filter')}`)
@@ -42,6 +49,14 @@ export default Ember.Controller.extend({
     
     resetClicked() {
       this.set('report', null);
+    },
+    
+    showAllClicked() {
+      this.findAllReports();
+    },
+    
+    submitForm() {
+      this.findReports();
     }
   }
 });

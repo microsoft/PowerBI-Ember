@@ -8,6 +8,7 @@
         {{input type="text" class="form-control" id="searchinput" required="required" placeholder="Enter report name" autocomplete="off" value=filter key-up=(action 'autoComplete')}}
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
+    <button type="button" class="btn btn-success" {{action 'showAllClicked'}}>Show All</button>
     <div class="checkbox">
         <label for="filterPaneCheckbox">
             {{input type="checkbox" id="filterPaneCheckbox" checked=filterPaneEnabled }} Enable filter pane when embedding report.
