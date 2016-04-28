@@ -17,6 +17,9 @@ export default Ember.Component.extend({
     if(this.validateAttributes()) {
       this.embed(this.$());
     }
+    else if(this.component) {
+      this.reset(this.$());
+    }
   },
   
   embed(element) {
@@ -29,6 +32,11 @@ export default Ember.Component.extend({
     Ember.$.extend(config, this.options);
 
     this.component = this.get('powerbi').embed(element, config);
+  },
+  
+  reset(element) {
+    this.get('powerbi').reset(element);
+    this.component = null;
   },
   
   validateAttributes() {

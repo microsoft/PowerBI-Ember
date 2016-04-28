@@ -34,10 +34,18 @@ const PowerBiComponent = Ember.Component.extend({
     if(this.validateOptions(options)) {
       this.embed(this.$(), options);
     }
+    else if(this.component) {
+      this.reset(this.$());
+    }
   },
   
   embed(element, options) {
     this.component = this.get('powerbi').embed(element, options);
+  },
+  
+  reset(element) {
+    this.get('powerbi').reset(element);
+    this.component = null;
   },
   
   validateOptions(options) {

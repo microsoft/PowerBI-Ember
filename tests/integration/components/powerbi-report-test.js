@@ -105,7 +105,6 @@ test('calls internal .reset with this.component', function () {
   
   // Arrange
   const testData = {
-    type: 'report',
     embedUrl: 'http://embed.powerbi.com/appTokenReportEmbed',
     accessToken: 'fakeToken1'
   };
@@ -125,3 +124,73 @@ test('calls internal .reset with this.component', function () {
   sinon.assert.calledWithMatch(this.get('powerbiService.reset'), { 0: component[0] });
 });
 
+test('calls internal .reset with jquery element when attributes become invalid', function () {
+  // Manual beforeEach
+  this.get('powerbiService.embed').reset();
+  this.get('powerbiService.reset').reset();
+  
+  // Arrange
+  const testData = {
+    embedUrl: 'http://embed.powerbi.com/appTokenReportEmbed',
+    accessToken: 'fakeToken1'
+  };
+  
+  this.set('embedUrl', testData.embedUrl);
+  this.set('accessToken', testData.accessToken);
+  
+  // Act
+  this.render(hbs`{{powerbi-report embedUrl=embedUrl accessToken=accessToken}}`);
+  sinon.assert.calledOnce(this.get('powerbiService.embed'));
+  
+  const component = this.$().find('.powerbi-frame');
+  this.set('embedUrl', null);
+
+  // Assert
+  sinon.assert.calledWithMatch(this.get('powerbiService.reset'), { 0: component[0] });
+});
+
+test('does not call internal .reset when attributes are invalid unless component was already embedded', function () {
+  // Manual beforeEach
+  this.get('powerbiService.embed').reset();
+  this.get('powerbiService.reset').reset();
+  
+  // Arrange
+  const testData = {
+    accessToken: 'fakeToken1'
+  };
+  
+  this.set('embedUrl', null);
+  this.set('accessToken', testData.accessToken);
+  
+  // Act
+  this.render(hbs`{{powerbi-report embedUrl=embedUrl accessToken=accessToken}}`);
+  
+  // Assert
+  sinon.assert.notCalled(this.get('powerbiService.embed'));
+  sinon.assert.notCalled(this.get('powerbiService.reset'));
+});
+
+test('this.component is set to null after calling reset', function (assert) {
+  // Manual beforeEach
+  this.get('powerbiService.embed').reset();
+  this.get('powerbiService.reset').reset();
+  
+  // Arrange
+  const testData = {
+    embedUrl: 'http://embed.powerbi.com/appTokenReportEmbed',
+    accessToken: 'fakeToken1'
+  };
+  
+  this.set('embedUrl', testData.embedUrl);
+  this.set('accessToken', testData.accessToken);
+  
+  // Act
+  this.render(hbs`{{powerbi-report embedUrl=embedUrl accessToken=accessToken}}`);
+  sinon.assert.calledOnce(this.get('powerbiService.embed'));
+  
+  this.set('accessToken', null);
+  sinon.assert.calledOnce(this.get('powerbiService.reset'));
+
+  // Assert
+  assert.equal(this.get('component'), null);
+});
