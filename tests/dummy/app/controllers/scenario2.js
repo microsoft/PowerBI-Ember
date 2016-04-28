@@ -38,6 +38,10 @@ export default Ember.Controller.extend({
     
     embedReport(report) {
       this.findReportById(report.id);
+    },
+    
+    resetClicked() {
+      this.set('report', null);
     }
   }
 });

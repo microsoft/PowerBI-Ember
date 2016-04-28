@@ -24,7 +24,9 @@
     </li>
   {{/each}}
 </ol>
-
+<p class="text-right">
+    <button type="button" class="btn btn-danger" {{action 'resetClicked'}}>Reset</button>
+</p>
 <div class="powerbi-sample">
     {{powerbi-component report}}
 </div>
