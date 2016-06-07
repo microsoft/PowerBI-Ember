@@ -2,7 +2,7 @@
 <p>Dynamic: Search reports by name, render selected</p>
 <small>Hint: Type 'Re' in the text field and search to find all reports that begin with 'Re'</small>
 
-<form id="search-form" class="form-inline">
+<form id="search-form" class="form-inline" {{action "submitForm" on="submit" }}>
     <div class="form-group">
         <label for="searchinput">Search</label>
         {{input type="text" class="form-control" id="searchinput" required="required" placeholder="Enter report name" autocomplete="off" value=filter key-up=(action 'autoComplete')}}
