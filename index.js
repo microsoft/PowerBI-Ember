@@ -13,5 +13,6 @@ module.exports = {
     
     app.import(app.bowerDirectory + '/powerbi-client/dist/powerbi.js');
     app.import('vendor/shims/powerbi.js');
+    app.import('vendor/shims/powerbi-client.js');
   }
 };
