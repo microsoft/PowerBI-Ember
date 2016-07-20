@@ -1,0 +1,12 @@
+<div class="powerbi-page-navigation">
+  <button type="button" id="prevbutton" class="powerbi-page-navigation__previous btn btn-primary" {{action 'previousPageClicked'}}>&lt; Prev</button>
+  <div id="reportpagesbuttons" class="powerbi-page-navigation__pages">
+    {{#each pages as |page|}}
+      <button type="button" class="btn btn-success {{if (eq activePage.name page.name) "active"}}" {{action 'pageClicked' page}}>{{page.displayName}}</button>
+    {{else}}
+      <span>No pages loaded</span>
+    {{/each}}
+  </div>
+  <button type="button" id="cyclebutton" class="powerbi-page-navigation__cycle btn btn-warning {{if cycleIsEnabled "active"}}" {{action 'cyclePageClicked'}}>{{#if cycleIsEnabled}}Disable{{else}}Enable{{/if}} Cycle</button>
+  <button type="button" id="nextbutton" class="powerbi-page-navigation__next btn btn-primary" {{action 'nextPageClicked'}}>Next &gt;</button>
+</div>

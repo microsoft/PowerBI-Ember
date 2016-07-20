@@ -8,6 +8,7 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('scenario1');
   this.route('scenario2');
+  this.route('scenario3');
 });
 
 export default Router;

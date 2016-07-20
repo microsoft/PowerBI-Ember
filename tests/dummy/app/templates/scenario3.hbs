@@ -1,0 +1,13 @@
+<h1>Custom Page Navigation</h1>
+<p>Page navigation is hidden in the embedded report and recreated by developer to allow custom branding or even automation to tell stories and navigate user.</p>
+
+{{powerbi-report embedUrl=model.embedUrl accessToken=model.accessToken reportId=model.id onEmbedded=(action 'onEmbedded') }}
+
+{{#powerbi-page-navigation
+  activePage=activePage
+  pages=pages
+  onCycleClicked=(action 'cyclePageClicked')
+  onNextClicked=(action 'nextPageClicked')
+  onPageClicked=(action 'pageClicked')
+  onPreviousClicked=(action 'previousPageClicked')
+}}{{/powerbi-page-navigation}}

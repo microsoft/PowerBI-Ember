@@ -32,3 +32,26 @@ body {
 .checkbox {
     margin-left: 1em;
 }
+
+
+
+.powerbi-page-navigation {
+    display: flex;
+    margin-top: 2em;
+}
+.powerbi-page-navigation__pages {
+    flex: 1;
+}
+
+.powerbi-page-navigation__pages button {
+    margin-left: 1em;
+}
+.powerbi-page-navigation__pages button.btn-success.active {
+    background-color: red;
+}
+.powerbi-page-navigation__cycle {
+    margin-right: 1em;
+}
+.powerbi-page-navigation__cycle.btn-warning.active {
+    background-color: red;
+}
