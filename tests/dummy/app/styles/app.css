@@ -1,20 +1,19 @@
 body {
     padding: 2em 0;
 }
-.powerbi-sample {
-    margin: 0 0 3rem 0;
+
+.powerbi-frame--dotted {
     border: 2px dashed #cecece;
-    min-height: 500px;
-    position: relative;
-}
-.powerbi-sample iframe {
-    border: none;
 }
 .powerbi-frame {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    margin: 0 0 3rem 0;
+    height: 600px;
 }
+.powerbi-frame iframe {
+    border: none;
+}
+
+
 #reportslist {
     margin: 0 0 1em 0;
 }

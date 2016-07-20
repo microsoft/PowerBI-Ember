@@ -1,6 +1,4 @@
-<h1>Scenario 1</h1>
-<p>Static: Report ID is known: {{model.id}}</p>
+<h1>Static Embed</h1>
+<p>Report to embed is known by the developer: {{model.id}}</p>
 
-<div class="powerbi-sample">
-    {{powerbi-report embedUrl=model.embedUrl accessToken=model.accessToken }}
-</div>
+{{powerbi-report embedUrl=model.embedUrl accessToken=model.accessToken reportId=model.id class="powerbi-frame--dotted"}}
