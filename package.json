@@ -11,11 +11,11 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": "https://github.com/Microsoft/PowerBI-Ember",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Microsoft Power BI Team",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
