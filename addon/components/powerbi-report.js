@@ -9,6 +9,8 @@ export default Ember.Component.extend({
   accessToken: '',
   component: null,
   embedUrl: null,
+  name: null,
+  reportId: null,
   options: null,
   
   didRender() {
@@ -26,12 +28,19 @@ export default Ember.Component.extend({
     const config = {
         type: 'report',
         embedUrl: this.embedUrl,
-        accessToken: this.accessToken
+        accessToken: this.accessToken,
+        id: this.reportId,
+        uniqueId: this.name
     };
     
     Ember.$.extend(config, this.options);
 
     this.component = this.get('powerbi').embed(element, config);
+    const action = this.get('onEmbedded');
+    
+    if (action) {
+      action(this.component);
+    }
   },
   
   reset(element) {

@@ -41,6 +41,11 @@ const PowerBiComponent = Ember.Component.extend({
   
   embed(element, options) {
     this.component = this.get('powerbi').embed(element, options);
+    const action = this.get('onEmbedded');
+    
+    if (action) {
+      action(this.component);
+    }
   },
   
   reset(element) {
