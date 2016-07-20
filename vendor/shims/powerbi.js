@@ -2,7 +2,7 @@
   function vendorModule() {
     'use strict';
 
-    return { 'default': self['Powerbi'] };
+    return { 'default': self['powerbi'] };
   }
 
   define('powerbi', [], vendorModule);

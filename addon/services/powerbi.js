@@ -6,7 +6,7 @@ export default Ember.Service.extend({
   
   init() {
     this._super(...arguments);
-    this.set('powerbi', new Powerbi());
+    this.set('powerbi', powerbi);
   },
   
   embed(jqueryElement, config) {
