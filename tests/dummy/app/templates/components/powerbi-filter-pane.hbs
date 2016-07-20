@@ -1,0 +1,155 @@
+<form {{action 'onSubmit' on='submit'}}>
+    <h2>Custom Filter Pane</h2>
+
+  <fieldset>
+    <legend>Target Type:</legend>
+    <div class="form-group">
+      {{#x-select value=selectedTargetType class="form-control"}}
+        {{#each targetTypes as |targetType|}}
+          {{#x-option value=targetType}}{{targetType}}{{/x-option}}
+        {{/each}}
+      {{/x-select}}
+    </div>
+
+    <div class="form-group">
+      <label for="table">Table</label>
+      {{input type="text" class="form-control" placeholder="Table" value=table}}
+    </div>
+    {{#if (eq selectedTargetType 'Column')}}
+    <div class="form-group filter-type filter-type--column">
+      <label for="column">Column</label>
+      {{input type="text" class="form-control" placeholder="Column" value=column}}
+    </div>
+    {{/if}}
+    {{#if (eq selectedTargetType 'Hierarchy')}}
+    <div class="form-group filter-type filter-type--hierarchy">
+      <label for="hierarchy">Hierarchy</label>
+      {{input type="text" class="form-control" placeholder="hierarchy" value=hierarchy}}
+    </div>
+    <div class="form-group filter-type filter-type--hierarchy">
+      <label for="hierarchylevel">Hierarchy Level</label>
+      {{input type="text" class="form-control" placeholder="Hierarchy Level" value=hierarchyLevel}}
+    </div>
+    {{/if}}
+    {{#if (eq selectedTargetType 'Measure')}}
+    <div class="form-group filter-type filter-type--measure">
+      <label for="measure">Measure</label>
+      {{input type="text" class="form-control" placeholder="Measure" value=measure}}
+    </div>
+    {{/if}}
+  </fieldset>
+
+  <fieldset>
+    <legend>Operator Type:</legend>
+    {{#each filterTypes as |filterType|}}
+      <div class="radio">
+        {{#radio-button
+          value=filterType
+          groupValue=selectedFilterType
+          name="filterType"
+        }}
+          {{filterType}}
+        {{/radio-button}}
+      </div>
+    {{/each}}
+
+    {{#if (eq selectedFilterType 'Basic')}}
+    <div class="filter-operators filter-operators--basic">
+      <h5>Basic Operators</h5>
+      <div class="form-group">
+        {{#x-select value=selectedBasicOperator class="form-control"}}
+          {{#each basicOperators as |operator|}}
+            {{#x-option value=operator}}{{operator}}{{/x-option}}
+          {{/each}}
+        {{/x-select}}
+      </div>
+
+      <h5>Values</h5>
+      <div class="basicvalues">
+        <div class="form-group">
+          {{input class="form-control basic-value" placeholder="Value 1" value=value1 }}
+        </div>
+        <div class="form-group">
+          {{input class="form-control basic-value" placeholder="Value 2" value=value2 }}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    {{#if (eq selectedFilterType 'Advanced')}}
+    <div class="filter-operators filter-operators--advanced">
+      <h5>Advanced Operators</h5>
+
+      <p>Logical Operator</p>
+      <div class="form-group">
+        {{#x-select value=selectedLogicalOperator class="form-control"}}
+          {{#each logicalOperators as |operator|}}
+            {{#x-option value=operator}}{{operator}}{{/x-option}}
+          {{/each}}
+        {{/x-select}}
+      </div>
+
+      <div class="advancedvalues">
+        <div class="form-group advanced-value">
+          <p>Value</p>
+          <div class="form-group">
+            {{input class="form-control advanced-value-input" placeholder="Value 1" value=valueA }}
+          </div>
+          <p>Condition Operator</p>
+          {{#x-select value=conditionalOperatorA class="form-control"}}
+            {{#each conditionalOperators as |operator|}}
+              {{#x-option value=operator}}{{operator}}{{/x-option}}
+            {{/each}}
+          {{/x-select}}
+        </div>
+
+        <div class="form-group advanced-value">
+          <p>Value</p>
+          <div class="form-group">
+            {{input class="form-control advanced-value-input" placeholder="Value 1" value=valueB }}
+          </div>
+          <p>Condition Operator</p>
+          {{#x-select value=conditionalOperatorB class="form-control"}}
+            {{#each conditionalOperators as |operator|}}
+              {{#x-option value=operator}}{{operator}}{{/x-option}}
+            {{/each}}
+          {{/x-select}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </fieldset>
+
+  <fieldset>
+    <legend>Report Target:</legend>
+    <div class="form-group">
+      {{#each reportTargets as |reportTarget|}}
+        <div class="radio">
+          {{#radio-button
+            value=reportTarget
+            groupValue=selectedReportTarget
+            name="reportTarget"
+          }}
+            {{reportTarget}}
+          {{/radio-button}}
+        </div>
+      {{/each}}
+    </div>
+
+    {{#if (eq selectedReportTarget 'Page')}}
+    <div class="filter-target filter-target--page">
+      <div class="form-group">
+        {{#x-select value=selectedPage class="form-control"}}
+          {{#each pages as |page|}}
+            {{#x-option value=page}}{{page.displayName}}{{/x-option}}
+          {{/each}}
+        {{/x-select}}
+      </div>
+    </div>
+    {{/if}}
+  </fieldset>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-success">Add Filter</button>
+  </div>
+</form>

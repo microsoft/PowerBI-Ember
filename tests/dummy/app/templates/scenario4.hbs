@@ -1,0 +1,80 @@
+<h1>Custom Filter Pane</h1>
+<p>Filter pane is hidden in the embedded report and recreated by developer to allow custom branding or special preconfigured filters.</p>
+
+
+<div class="row">
+  <div class="col-md-9">
+    <div class="row">
+      <div class="col-xs-12">
+        {{powerbi-component model class="powerbi-container" onEmbedded=(action 'onEmbedded')}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <h4>Report</h4>
+      </div>
+      <div class="col-md-4">
+        <h4>Page</h4>
+      </div>
+      <div class="col-md-4">
+        <h4>Visual</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4">
+        <form id="removeAllFiltersReportForm">
+          <div class="form-group">
+            <input class="form-control" disabled placeholder="N/A" />
+          </div>
+          <button type="button" class="btn btn-warning btn-block" {{action "removeAllReportFiltersClicked"}}>Remove All Filters at Report Level</button>
+        </form>
+      </div>
+      <div class="col-xs-4">
+        <form id="removeAllFiltersPageForm">
+          <div class="form-group">
+            {{#x-select value=selectedRemoveAllFilterPage class="form-control"}}
+              {{#each reportPages as |page|}}
+                {{#x-option value=page}}{{page.displayName}}{{/x-option}}
+              {{/each}}
+            {{/x-select}}
+          </div>
+          <button type="button" class="btn btn-warning btn-block" {{action "removeAllPageFiltersClicked" selectedRemoveAllFilterPage}}>Remove All Filters at Page Level</button>
+        </form>
+      </div>
+      <div class="col-xs-4">
+        <form id="removeAllFiltersVisualForm">
+          <div class="form-group">
+            {{#x-select value=selectedRemoveAllFilterVisual class="form-control"}}
+              {{#x-option value='visualId1'}}Visual Id 1{{/x-option}}
+              {{#x-option value='visualId2'}}Visual Id 2{{/x-option}}
+              {{#x-option value='visualId3'}}Visual Id 3{{/x-option}}
+              {{#x-option value='visualId4'}}Visual Id 4{{/x-option}}
+            {{/x-select}}
+          </div>
+          <button type="button" class="btn btn-warning btn-block" {{action "removeAllVisualFiltersClicked" selectedRemoveAllFilterVisual}}>Remove All Filters at Visual Level</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <hr />
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="btn btn-primary btn-block" {{action "predefinedFilter1Clicked"}}>Predefined Basic Report Filter</button>
+        <p>Store > Name 'In' or 'Park'</p>
+        <button type="button" class="btn btn-primary btn-block" {{action "predefinedFilter2Clicked"}}>Predefined Advanced Report Filter</button>
+        <p>Store > Name contains 'Wash' or contains 'Park'</p>
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="btn btn-primary btn-block" {{action "predefinedFIlter3Clicked"}}>Predefined Advanced Page Filter</button>
+        <p>Store > Name contains 'Wash' or contains 'Park' (Page: District Monthly Sales)</p>
+      </div>
+      <div class="col-md-4">
+        N/A
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    {{#powerbi-filter-pane pages=reportPages onAddFilter=(action 'addFilter')}}{{/powerbi-filter-pane}}
+  </div>
+</div>
