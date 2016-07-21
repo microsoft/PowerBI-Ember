@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('scenario3');
   this.route('scenario4');
   this.route('scenario5');
+  this.route('scenario6');
 });
 
 export default Router;
