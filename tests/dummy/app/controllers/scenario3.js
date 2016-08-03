@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
 
       this.set('report', report);
 
-      report.on('loaded', event => {
+      report.on('loaded', () => {
         report.getPages()
           .then(pages => {
             this.set('pages', pages);
@@ -84,19 +84,20 @@ export default Ember.Controller.extend({
   },
 
   toggleCycle() {
+    function togglePage() {
+      this.set('cycleInterval', Ember.run.later(this, () => {
+        console.log('interval called');
+        this.changePage(true);
+        togglePage.call(this);
+      }, 2000));
+    }
+
     if (this.get('cycleIsEnabled')) {
       this.set('cycleIsEnabled', false);
       Ember.run.cancel(this.cycleInterval);
     }
     else {
       this.set('cycleIsEnabled', true);
-      function togglePage() {
-        this.set('cycleInterval', Ember.run.later(this, () => {
-          console.log('interval called');
-          this.changePage(true);
-          togglePage.call(this);
-        }, 2000));
-      }
 
       togglePage.call(this);
     }

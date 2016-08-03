@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
 
       this.set('report', report);
 
-      report.on('loaded', event => {
+      report.on('loaded', () => {
         report.getPages()
           .then(pages => {
             this.set('reportPages', pages);
