@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/ember-powerbi.svg)](https://www.npmjs.com/package/ember-powerbi)
 [![Total Downloads](https://img.shields.io/npm/dt/ember-powerbi.svg)](https://www.npmjs.com/package/ember-powerbi)
 [![Monthly Downloads](https://img.shields.io/npm/dm/ember-powerbi.svg)](https://www.npmjs.com/package/ember-powerbi)
-[![GitHub tag](https://img.shields.io/github/tag/microsoft/ember-powerbi.svg)](https://github.com/Microsoft/PowerBI-Ember/tags)
+[![GitHub tag](https://img.shields.io/github/tag/Microsoft/PowerBI-ember.svg)](https://github.com/Microsoft/PowerBI-Ember/tags)
 
 A set of EmberJS components to seemlessly embed Power BI components into web based applications.
 
