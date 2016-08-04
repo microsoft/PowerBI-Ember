@@ -1,6 +1,6 @@
 {
   "name": "ember-powerbi",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "A set of Ember components to embed Power BI components into Ember applications.",
   "directories": {
     "doc": "doc",
