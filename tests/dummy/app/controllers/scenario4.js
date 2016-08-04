@@ -4,8 +4,8 @@ import pbi from 'powerbi-client';
 export default Ember.Controller.extend({
   report: null,
   reportPages: null,
-  selectedRemoveAllFilterPage: null,
-  selectedRemoveAllFilterVisual: null,
+  selectedRemoveFiltersPage: null,
+  selectedRemoveFiltersVisual: null,
 
   actions: {
     onEmbedded(report) {
@@ -29,32 +29,25 @@ export default Ember.Controller.extend({
       });
     },
 
-    addFilter(filter, target) {
-      console.log('addFilter', filter, target);
-      this.report.addFilter(filter, target);
+    setFilters(filter, filterable) {
+      console.log('setFilters', filter, filterable);
+      filterable.setFilters([filter]);
     },
 
-    removeAllReportFiltersClicked() {
-      console.log('removeAllReportFiltersClicked');
-      this.report.removeAllFilters();
+    removeReportFiltersClicked() {
+      console.log('removeReportFiltersClicked');
+      this.report.removeFilters();
     },
 
-    removeAllPageFiltersClicked(page) {
-      console.log('removeAllPageFiltersClicked', page);
-      const target = {
-        type: "page",
-        name: page.name
-      };
-      this.report.removeAllFilters(target);
+    removePageFiltersClicked(page) {
+      console.log('removePageFiltersClicked', page);
+      page.removeFilters();
     },
 
-    removeAllVisualFiltersClicked(visualId) {
-      console.log('removeAllVisualFiltersClicked', visualId);
-      const target = {
-        type: "visual",
-        id: visualId
-      };
-      this.report.removeAllFilters(target);
+    removeVisualFiltersClicked(visual) {
+      console.log('removeVisualFiltersClicked', visual);
+      throw new Error(`Referencing visuals is not implemented`);
+      // visual.removeFilters();
     },
 
     predefinedFilter1Clicked() {
@@ -65,15 +58,15 @@ export default Ember.Controller.extend({
       }, "Or",
         {
           operator: "Contains",
-          value: "Wash"
+          value: "Direct"
         },
         {
-          operator: "Contains",
-          value: "Park"
+          operator: "None",
+          value: "x"
         }
       );
 
-      this.report.addFilter(predefinedFilter1.toJSON());
+      this.report.setFilters([predefinedFilter1.toJSON()]);
     },
 
     predefinedFilter2Clicked() {
@@ -92,10 +85,10 @@ export default Ember.Controller.extend({
         }
       );
 
-      this.report.addFilter(predefinedFilter2.toJSON());
+      this.report.setFilters([predefinedFilter2.toJSON()]);
     },
 
-    predefinedFIlter3Clicked() {
+    predefinedFilter3Clicked() {
       console.log('predefinedFIlter3Clicked');
       const predefinedFilter3 = new pbi.models.AdvancedFilter({
         table: "Store",
@@ -110,12 +103,8 @@ export default Ember.Controller.extend({
           value: "Park"
         }
       );
-      const predefinedTarget3 = {
-        type: "page",
-        name: "ReportSection2"
-      };
-
-      this.report.addFilter(predefinedFilter3.toJSON(), predefinedTarget3);
+      
+      this.report.page('ReportSection2').setFilters([predefinedFilter3.toJSON()]);
     }
   }
 });

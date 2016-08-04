@@ -85,11 +85,10 @@ export default Ember.Component.extend({
       const data = {
         target: this.getFilterTypeTarget(),
         operator: this.getFilterOperatorAndValues(),
-        reportTarget: this.getReportTarget()
+        filterable: this.getFilterableTarget()
       };
 
       let filter;
-
       if (data.operator.type === "Basic") {
         filter = new pbi.models.BasicFilter(data.target, data.operator.operator, data.operator.values);
       }
@@ -97,13 +96,7 @@ export default Ember.Component.extend({
         filter = new pbi.models.AdvancedFilter(data.target, data.operator.logicalOperator, data.operator.conditions);
       }
 
-      let target;
-      if ((data.reportTarget.type === "page")
-        || (data.reportTarget.type === "visual")) {
-        target = data.reportTarget;
-      }
-
-      this.get('onAddFilter')(filter, target);
+      this.get('onAddFilter')(filter, data.filterable);
     }
   },
 
@@ -152,16 +145,14 @@ export default Ember.Component.extend({
     return operatorAndValues;
   },
   
-  getReportTarget() {
-    var target = {
-      type: this.selectedReportTarget.toLowerCase()
-    };
-
-    if (this.selectedReportTarget === "Page") {
-      target.name = this.selectedPage.name;
+  getFilterableTarget() {
+    var target = this.get('report');
+      
+    if (this.get('selectedReportTarget') === "Page") {
+      target = this.get('selectedPage');
     }
-    else if (this.selectedReportTarget === "Visual") {
-      target.id = undefined; // Need way to populate visual ids
+    else if (this.get('selectedReportTarget') === "Visual") {
+      throw new Error(`Abilty to apply filters to visuals is not implemented yet`);
     }
 
     return target;

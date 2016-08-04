@@ -41,7 +41,7 @@ export default Ember.Controller.extend({
 
     pageClicked(page) {
       console.log('pageClicked', page);
-      this.get('report').setPage(page.name);
+      page.setActive();
     },
 
     previousPageClicked() {
@@ -77,7 +77,7 @@ export default Ember.Controller.extend({
     this.pages
       .some((page, i) => {
         if (activePageIndex === i) {
-          this.get('report').setPage(page.name);
+          page.setActive();
           return true;
         }
       });

@@ -22,36 +22,36 @@
     </div>
     <div class="row">
       <div class="col-xs-4">
-        <form id="removeAllFiltersReportForm">
+        <form id="removeFiltersReportForm">
           <div class="form-group">
             <input class="form-control" disabled placeholder="N/A" />
           </div>
-          <button type="button" class="btn btn-warning btn-block" {{action "removeAllReportFiltersClicked"}}>Remove All Filters at Report Level</button>
+          <button type="button" class="btn btn-warning btn-block" {{action "removeReportFiltersClicked"}}>Remove All Filters at Report Level</button>
         </form>
       </div>
       <div class="col-xs-4">
-        <form id="removeAllFiltersPageForm">
+        <form id="removeFiltersPageForm">
           <div class="form-group">
-            {{#x-select value=selectedRemoveAllFilterPage class="form-control"}}
+            {{#x-select value=selectedRemoveFiltersPage class="form-control"}}
               {{#each reportPages as |page|}}
                 {{#x-option value=page}}{{page.displayName}}{{/x-option}}
               {{/each}}
             {{/x-select}}
           </div>
-          <button type="button" class="btn btn-warning btn-block" {{action "removeAllPageFiltersClicked" selectedRemoveAllFilterPage}}>Remove All Filters at Page Level</button>
+          <button type="button" class="btn btn-warning btn-block" {{action "removePageFiltersClicked" selectedRemoveFiltersPage}}>Remove All Filters at Page Level</button>
         </form>
       </div>
       <div class="col-xs-4">
-        <form id="removeAllFiltersVisualForm">
+        <form id="removeFiltersVisualForm">
           <div class="form-group">
-            {{#x-select value=selectedRemoveAllFilterVisual class="form-control"}}
+            {{#x-select value=selectedRemoveFiltersVisual class="form-control"}}
               {{#x-option value='visualId1'}}Visual Id 1{{/x-option}}
               {{#x-option value='visualId2'}}Visual Id 2{{/x-option}}
               {{#x-option value='visualId3'}}Visual Id 3{{/x-option}}
               {{#x-option value='visualId4'}}Visual Id 4{{/x-option}}
             {{/x-select}}
           </div>
-          <button type="button" class="btn btn-warning btn-block" {{action "removeAllVisualFiltersClicked" selectedRemoveAllFilterVisual}}>Remove All Filters at Visual Level</button>
+          <button type="button" class="btn btn-warning btn-block" {{action "removeVisualFiltersClicked" selectedRemoveFiltersVisual}}>Remove All Filters at Visual Level</button>
         </form>
       </div>
     </div>
@@ -66,7 +66,7 @@
         <p>Store > Name contains 'Wash' or contains 'Park'</p>
       </div>
       <div class="col-md-4">
-        <button type="button" class="btn btn-primary btn-block" {{action "predefinedFIlter3Clicked"}}>Predefined Advanced Page Filter</button>
+        <button type="button" class="btn btn-primary btn-block" {{action "predefinedFilter3Clicked"}}>Predefined Advanced Page Filter</button>
         <p>Store > Name contains 'Wash' or contains 'Park' (Page: District Monthly Sales)</p>
       </div>
       <div class="col-md-4">
@@ -75,6 +75,6 @@
     </div>
   </div>
   <div class="col-md-3">
-    {{#powerbi-filter-pane pages=reportPages onAddFilter=(action 'addFilter')}}{{/powerbi-filter-pane}}
+    {{#powerbi-filter-pane report=report pages=reportPages onAddFilter=(action 'setFilters')}}{{/powerbi-filter-pane}}
   </div>
 </div>
