@@ -3,7 +3,7 @@ A set of EmberJS components to seemlessly embed Power BI components into web bas
 
 ## Contents
 
-This addon provides components such as `{{powerbi-report}}` and service `powerbi`.
+This addon provides components such as `{{powerbi-report}}` and `{{powerbi-component}}` as well as a service `powerbi` which wraps the core powerbi service from the [powerbi-client](https://github.com/Microsoft/PowerBI-JavaScript) package.
 
 ## Getting started
 
@@ -17,21 +17,27 @@ This addon provides components such as `{{powerbi-report}}` and service `powerbi
   
   If you need a sample server to test reports from your own Power BI workspace you can use the following:
   
-  - C# Sample Server: (COMING SOON)
+  - C# Sample Server: [https://github.com/Azure-Samples/powerbi-dotnet-server-aspnet-web-api](https://github.com/Azure-Samples/powerbi-dotnet-server-aspnet-web-api)
   
   - Nodejs Sample Server: (COMING SOON)
   
 3. Insert the component in your template where you want to embed the visual:
 
-  `{{powerbi-report embedUrl=report.embedUrl accessToken=report.accessToken}}`
+  ```
+  {{powerbi-report embedUrl=embedConfiguration.embedUrl accessToken=embedConfiguration.accessToken reportId=embedConfiguration.id onEmbedded=(action 'onEmbedded') }}
+  ```
   
 ## Other Notes
 
   Use the generic component to pass all properties as a single object.  This may be useful when the type of the embeded component changes dynamically:
   
-  `{{powerbi-component report}}`
+  ```
+  {{powerbi-component embedConfiguration onEmbedded=(action 'onEmbedded') class="powerbi-container"}}
+  ```
   
   Note that because this is generic you must have a `type` property on the object to indicate what you're embedding.
+
+  See the demo application for detailed usage which shows integration with controllers and how to setup the onEmbedded action. The embed action is necessary in order to get access to the embed instance within the parent controller which enables sending commands or registering event handlers.
 
 ## Running the dummy app:
 ### Installation
