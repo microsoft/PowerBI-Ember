@@ -6,6 +6,18 @@ export default Ember.Controller.extend({
   reportPages: null,
   selectedRemoveFiltersPage: null,
   selectedRemoveFiltersVisual: null,
+  filtersNode: null,
+  
+  init() {
+    this._super();
+
+    this.set('filtersNode', Ember.Object.create({
+        name: undefined,
+        filterable: null,
+        filters: Ember.A(),
+        nodes: Ember.A()
+    }));
+  },
 
   actions: {
     onEmbedded(report) {
@@ -48,6 +60,91 @@ export default Ember.Controller.extend({
       console.log('removeVisualFiltersClicked', visual);
       throw new Error(`Referencing visuals is not implemented`);
       // visual.removeFilters();
+    },
+
+    refreshFilters() {
+      console.log('controller, refresh filters');
+
+      this.get('report').getFilters()
+        .then(filters => {
+          this.set('filtersNode.filters', filters);
+        });
+
+      const pageNodePromises = this.get('reportPages')
+        .map(page => {
+          return page.getFilters()
+            .then(filters => {
+              let node;
+              let filteredNodes = this.get('filtersNode.nodes').filter(node => node.name === page.name);
+              if (filteredNodes.length === 1) {
+                node = filteredNodes[0];
+                node.set('filters', Ember.A(filters));
+              }
+              else {
+                const newNode = Ember.Object.create({
+                  name: page.name,
+                  filterable: null,
+                  filters: Ember.A(filters),
+                  nodes: Ember.A()
+                });
+
+                this.get('filtersNode.nodes').pushObject(newNode);
+              }
+            });
+        });
+
+      Promise.all(pageNodePromises)
+          .then(() => {
+              console.log('refresh done', this.get('filtersNode'));
+          });
+    },
+
+    removeFilter(filterToRemove, filterableName) {
+      console.log('controller, remove filter');
+
+      let filterable;
+      let filtersNode;
+
+      if (!filterableName) {
+          filterable = this.get('report');
+          filtersNode = this.get('filtersNode');
+      }
+      else {
+        let filteredPages = this.get('reportPages').filter(page => page.name === filterableName);
+        if (filteredPages.length !== 1) {
+          throw new Error(`Could not find filterable object matching name: ${filterableName}.  There is likely a problem with how the filterableName is being assigned in event.`);
+        }
+
+        filterable = filteredPages[0];
+
+        let filteredNodes = this.filtersNode.get('nodes').filter(node => node.name === filteredPages[0].name);
+        if (filteredNodes.length !== 1) {
+          throw new Error(`Could not find node matching name: ${filteredPages[0].name}.`);
+        }
+
+        filtersNode = filteredNodes[0];
+      }
+
+      return filterable.getFilters()
+        .then(filters => {
+          let index = -1;
+          filters.some((filter, i) => {
+            if (this.areFiltersEqual(filter, filterToRemove)) {
+              index = i;
+              return true;
+            }
+          });
+
+          if (index !== -1) {
+            filters.splice(index, 1);
+            return filterable.setFilters(filters)
+              .then(() => {
+                  filtersNode.set('filters', filters);
+              });
+          }
+
+          return Promise.reject(new Error('Could not find filter'));
+        });
     },
 
     predefinedFilter1Clicked() {
@@ -106,5 +203,61 @@ export default Ember.Controller.extend({
       
       this.report.page('ReportSection2').setFilters([predefinedFilter3.toJSON()]);
     }
-  }
+  },
+  
+  areFiltersEqual(filterA, filterB) {
+        let filterAType = pbi.models.getFilterType(filterA);
+        let filterATarget = filterA.target;
+        let advancedFilterA;
+        let basicFilterA;
+        let filterBType = pbi.models.getFilterType(filterB);
+        let filterBTarget = filterB.target;
+        let advancedFilterB;
+        let basicFilterB;
+
+        if (filterAType === pbi.models.FilterType.Advanced) {
+            advancedFilterA = filterA;
+        }
+        else if (filterAType === pbi.models.FilterType.Basic) {
+            basicFilterA = filterA;
+        }
+
+        if (filterBType === pbi.models.FilterType.Advanced) {
+            advancedFilterB = filterB;
+        }
+        else if (filterBType === pbi.models.FilterType.Basic) {
+            basicFilterB = filterB;
+        }
+
+        const areTargetsEqual = filterATarget.table === filterBTarget.table
+            && filterATarget.column === filterBTarget.column
+            && filterATarget.hierarchy === filterBTarget.hierarchy
+            && filterATarget.hierarchyLevel === filterBTarget.hierarchyLevel
+            && filterATarget.measure === filterBTarget.measure
+            ;
+
+        if (!areTargetsEqual) {
+            return false;
+        }
+
+        if (advancedFilterA && advancedFilterB) {
+            return advancedFilterA.logicalOperator === advancedFilterB.logicalOperator
+                && advancedFilterA.conditions.every(condition => {
+                    return advancedFilterB.conditions.some(conditionB => {
+                        return condition.operator === conditionB.operator
+                            && condition.value === conditionB.value
+                            ;
+                    });
+                })
+                ;
+        }
+        else if (basicFilterA && basicFilterB) {
+            return basicFilterA.operator === basicFilterB.operator
+                && basicFilterA.values.every(value => {
+                    return basicFilterB.values.some(valueB => valueB === value)
+                });
+        }
+
+        return false;
+    }
 });

@@ -69,6 +69,8 @@ export default Ember.Component.extend({
   hierarchyLevel: null,
   measure: null,
 
+  filtersNode: null,
+
   init() {
     this._super();
     this.set('selectedReportTarget', this.get('reportTargets')[0]);
@@ -78,7 +80,6 @@ export default Ember.Component.extend({
     this.set('selectedBasicOperator', this.get('basicOperators.firstObject'));
     this.set('selectedLogicalOperator', this.get('logicalOperators.firstObject'));
   },
-
 
   actions: {
     onSubmit() {
@@ -97,6 +98,14 @@ export default Ember.Component.extend({
       }
 
       this.get('onAddFilter')(filter, data.filterable);
+    },
+
+    refreshClicked() {
+      this.get('onRefreshFilters')();
+    },
+
+    removeFilterClicked(filter, filterable) {
+      this.get('onRemoveFilter')(filter, filterable);
     }
   },
 

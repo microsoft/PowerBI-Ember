@@ -153,3 +153,43 @@
     <button type="submit" class="btn btn-success">Add Filter</button>
   </div>
 </form>
+
+<div id="appliedFilters">
+  <h2>Applied Filters</h2>
+  <p>
+    <button type="button" class="btn btn-success" {{action 'refreshClicked' }}>Refresh</button>
+  </p>
+
+  <h3>Report Level</h3>
+  <p>{{filtersNode.name}}</p>
+  <div class="filters">
+    {{#each filtersNode.filters as |filter|}}
+    <div class="filter">
+      <button class="btn btn-danger filter__remove" {{action 'removeFilterClicked' filter}}>&times;</button>
+      <div class="filter__text">
+        {{json filter}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+  <h3>Page Level</h3>
+  {{#each filtersNode.nodes as |node|}}
+  <div>
+    <h4>{{node.name}}</h4>
+    <div class="filters">
+      {{#each node.filters as |filter|}}
+      <div class="filter">
+        <button class="btn btn-danger filter__remove" {{action 'removeFilterClicked' filter node.name}}>&times;</button>
+        <div class="filter__text">
+          {{json filter}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{/each}}
+
+  <h3>Visual Level</h3>
+  <p>N/A</p>
+</div>

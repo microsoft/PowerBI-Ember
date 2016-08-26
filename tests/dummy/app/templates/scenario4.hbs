@@ -75,6 +75,13 @@
     </div>
   </div>
   <div class="col-md-3">
-    {{#powerbi-filter-pane report=report pages=reportPages onAddFilter=(action 'setFilters')}}{{/powerbi-filter-pane}}
+    {{#powerbi-filter-pane
+      report=report
+      pages=reportPages
+      filtersNode=filtersNode
+      onAddFilter=(action 'setFilters')
+      onRefreshFilters=(action 'refreshFilters')
+      onRemoveFilter=(action 'removeFilter')
+    }}{{/powerbi-filter-pane}}
   </div>
 </div>
