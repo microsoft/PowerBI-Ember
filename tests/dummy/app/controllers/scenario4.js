@@ -7,15 +7,15 @@ export default Ember.Controller.extend({
   selectedRemoveFiltersPage: null,
   selectedRemoveFiltersVisual: null,
   filtersNode: null,
-  
+
   init() {
     this._super();
 
     this.set('filtersNode', Ember.Object.create({
-        name: undefined,
-        filterable: null,
-        filters: Ember.A(),
-        nodes: Ember.A()
+      name: undefined,
+      filterable: null,
+      filters: Ember.A(),
+      nodes: Ember.A()
     }));
   },
 
@@ -93,10 +93,10 @@ export default Ember.Controller.extend({
             });
         });
 
-      Promise.all(pageNodePromises)
-          .then(() => {
-              console.log('refresh done', this.get('filtersNode'));
-          });
+      Ember.RSVP.Promise.all(pageNodePromises)
+        .then(() => {
+          console.log('refresh done', this.get('filtersNode'));
+        });
     },
 
     removeFilter(filterToRemove, filterableName) {
@@ -106,8 +106,8 @@ export default Ember.Controller.extend({
       let filtersNode;
 
       if (!filterableName) {
-          filterable = this.get('report');
-          filtersNode = this.get('filtersNode');
+        filterable = this.get('report');
+        filtersNode = this.get('filtersNode');
       }
       else {
         let filteredPages = this.get('reportPages').filter(page => page.name === filterableName);
@@ -139,11 +139,11 @@ export default Ember.Controller.extend({
             filters.splice(index, 1);
             return filterable.setFilters(filters)
               .then(() => {
-                  filtersNode.set('filters', filters);
+                filtersNode.set('filters', filters);
               });
           }
 
-          return Promise.reject(new Error('Could not find filter'));
+          return Ember.RSVP.Promise.reject(new Error('Could not find filter'));
         });
     },
 
@@ -200,64 +200,62 @@ export default Ember.Controller.extend({
           value: "Park"
         }
       );
-      
+
       this.report.page('ReportSection2').setFilters([predefinedFilter3.toJSON()]);
     }
   },
-  
+
   areFiltersEqual(filterA, filterB) {
-        let filterAType = pbi.models.getFilterType(filterA);
-        let filterATarget = filterA.target;
-        let advancedFilterA;
-        let basicFilterA;
-        let filterBType = pbi.models.getFilterType(filterB);
-        let filterBTarget = filterB.target;
-        let advancedFilterB;
-        let basicFilterB;
+    let filterAType = pbi.models.getFilterType(filterA);
+    let filterATarget = filterA.target;
+    let advancedFilterA;
+    let basicFilterA;
+    let filterBType = pbi.models.getFilterType(filterB);
+    let filterBTarget = filterB.target;
+    let advancedFilterB;
+    let basicFilterB;
 
-        if (filterAType === pbi.models.FilterType.Advanced) {
-            advancedFilterA = filterA;
-        }
-        else if (filterAType === pbi.models.FilterType.Basic) {
-            basicFilterA = filterA;
-        }
-
-        if (filterBType === pbi.models.FilterType.Advanced) {
-            advancedFilterB = filterB;
-        }
-        else if (filterBType === pbi.models.FilterType.Basic) {
-            basicFilterB = filterB;
-        }
-
-        const areTargetsEqual = filterATarget.table === filterBTarget.table
-            && filterATarget.column === filterBTarget.column
-            && filterATarget.hierarchy === filterBTarget.hierarchy
-            && filterATarget.hierarchyLevel === filterBTarget.hierarchyLevel
-            && filterATarget.measure === filterBTarget.measure
-            ;
-
-        if (!areTargetsEqual) {
-            return false;
-        }
-
-        if (advancedFilterA && advancedFilterB) {
-            return advancedFilterA.logicalOperator === advancedFilterB.logicalOperator
-                && advancedFilterA.conditions.every(condition => {
-                    return advancedFilterB.conditions.some(conditionB => {
-                        return condition.operator === conditionB.operator
-                            && condition.value === conditionB.value
-                            ;
-                    });
-                })
-                ;
-        }
-        else if (basicFilterA && basicFilterB) {
-            return basicFilterA.operator === basicFilterB.operator
-                && basicFilterA.values.every(value => {
-                    return basicFilterB.values.some(valueB => valueB === value)
-                });
-        }
-
-        return false;
+    if (filterAType === pbi.models.FilterType.Advanced) {
+      advancedFilterA = filterA;
     }
+    else if (filterAType === pbi.models.FilterType.Basic) {
+      basicFilterA = filterA;
+    }
+
+    if (filterBType === pbi.models.FilterType.Advanced) {
+      advancedFilterB = filterB;
+    }
+    else if (filterBType === pbi.models.FilterType.Basic) {
+      basicFilterB = filterB;
+    }
+
+    const areTargetsEqual = filterATarget.table === filterBTarget.table &&
+      filterATarget.column === filterBTarget.column &&
+      filterATarget.hierarchy === filterBTarget.hierarchy &&
+      filterATarget.hierarchyLevel === filterBTarget.hierarchyLevel &&
+      filterATarget.measure === filterBTarget.measure;
+
+    if (!areTargetsEqual) {
+      return false;
+    }
+
+    if (advancedFilterA && advancedFilterB) {
+      return advancedFilterA.logicalOperator === advancedFilterB.logicalOperator &&
+        advancedFilterA.conditions.every(condition => {
+          return advancedFilterB.conditions.some(conditionB => {
+            return condition.operator === conditionB.operator &&
+              condition.value === conditionB.value;
+          });
+        })
+        ;
+    }
+    else if (basicFilterA && basicFilterB) {
+      return basicFilterA.operator === basicFilterB.operator &&
+        basicFilterA.values.every(value => {
+          return basicFilterB.values.some(valueB => valueB === value);
+        });
+    }
+
+    return false;
+  }
 });
