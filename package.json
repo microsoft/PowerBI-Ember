@@ -11,6 +11,7 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
+  "homepage": "https://microsoft.github.io/PowerBI-Ember",
   "repository": "https://github.com/Microsoft/PowerBI-Ember",
   "engines": {
     "node": ">= 0.10.0"
