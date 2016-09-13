@@ -1,0 +1,75 @@
+body {
+    padding: 2em 0;
+}
+
+.powerbi-frame--dotted {
+    border: 2px dashed #cecece;
+}
+.powerbi-frame {
+    margin: 0 0 3rem 0;
+    height: 600px;
+}
+.powerbi-frame iframe {
+    border: none;
+}
+
+
+#reportslist {
+    margin: 0 0 1em 0;
+}
+#reportslist li {
+    margin: 1em 0;
+}
+.reportslistdescription {
+    margin: 1em 0 0 0;
+    font-weight: bold;
+}
+.report-name {
+    display: inline-block;
+    margin: 0 1em;
+    font-weight: bold;
+}
+.checkbox {
+    margin-left: 1em;
+}
+
+
+
+.powerbi-page-navigation {
+    display: flex;
+    margin-top: 2em;
+}
+.powerbi-page-navigation__pages {
+    flex: 1;
+}
+
+.powerbi-page-navigation__pages button {
+    margin-left: 1em;
+}
+.powerbi-page-navigation__pages button.btn-success.active {
+    background-color: red;
+}
+.powerbi-page-navigation__cycle {
+    margin-right: 1em;
+}
+.powerbi-page-navigation__cycle.btn-warning.active {
+    background-color: red;
+}
+
+.filters > * + * {
+    margin-top: 1em;
+}
+.filter {
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.filter__remove {
+    float: right;
+}
+.filter__text {
+    margin-right: 3em;
+    word-break: break-all;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 90%;
+}
