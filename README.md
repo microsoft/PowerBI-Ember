@@ -25,7 +25,7 @@ This addon provides components such as `{{powerbi-report}}` and `{{powerbi-compo
   
   - C# Sample Server: [https://github.com/Azure-Samples/powerbi-dotnet-server-aspnet-web-api](https://github.com/Azure-Samples/powerbi-dotnet-server-aspnet-web-api)
   
-  - Nodejs Sample Server: (COMING SOON)
+  - Nodejs Sample Server: [https://github.com/Azure-Samples/powerbi-node-server-express](https://github.com/Azure-Samples/powerbi-node-server-express)
   
 3. Insert the component in your template where you want to embed the visual:
 
