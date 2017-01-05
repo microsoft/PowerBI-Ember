@@ -8,7 +8,7 @@ module.exports = {
   //     foo: options.entity.options.foo
   //   };
   // }
-  
+
   normalizeEntityName: function() {
     // this prevents an error when the entityName is
     // not specified (since that doesn't actually matter
@@ -16,6 +16,6 @@ module.exports = {
   },
 
   afterInstall: function(options) {
-    return this.addBowerPackageToProject('powerbi-client', 'beta');
+    return this.addBowerPackageToProject('powerbi-client', '2.2.3');
   }
 };
